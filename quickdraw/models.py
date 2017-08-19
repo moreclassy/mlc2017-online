@@ -34,12 +34,12 @@ class Convolution(BaseModel):
     net = slim.max_pool2d(net, [2, 2], scope='pool2')
     net = slim.repeat(net, 3, slim.conv2d, 256, [3, 3], scope='conv3')
     net = slim.max_pool2d(net, [2, 2], scope='pool3')
-    net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3], scope='conv4')
+    """net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3], scope='conv4')
     net = slim.max_pool2d(net, [2, 2], scope='pool4')
     net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3], scope='conv5')
     net = slim.max_pool2d(net, [2, 2], scope='pool5')
     net = slim.fully_connected(net, 4096, scope='fc6')
-    net = slim.dropout(net, 0.5, scope='dropout6')
+    net = slim.dropout(net, 0.5, scope='dropout6')"""
     net = slim.fully_connected(net, 4096, scope='fc7')
     net = slim.dropout(net, 0.5, scope='dropout7')
     output = slim.fully_connected(
