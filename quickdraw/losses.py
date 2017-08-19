@@ -36,6 +36,10 @@ class BaseLoss(object):
     """
     raise NotImplementedError()
 
+class SparseCrossEntropyLoss(BaseLoss):
+    def calculate_loss(self, predictions, labels, **unused_params):
+        with tf.name_scope("loss_xent"):
+            return tf.losses.sparse_softmax_cross_entropy(labels, predictions)
 
 class CrossEntropyLoss(BaseLoss):
   """Calculate the cross entropy loss between the predictions and labels.
