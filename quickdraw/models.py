@@ -26,6 +26,14 @@ class BaseModel(object):
   def create_model(self, unused_model_input, **unused_params):
     raise NotImplementedError()
 
+class Convolution(BaseModel):
+  def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
+    net = slim.flatten(model_input)
+    output = slim.fully_connected(
+        net, num_classes, activation_fn=None,
+        weights_regularizer=slim.l2_regularizer(l2_penalty))
+    return {"predictions": output}
+
 class LogisticModel(BaseModel):
   """Logistic model with L2 regularization."""
 
