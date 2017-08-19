@@ -36,7 +36,7 @@ class Convolution(BaseModel):
     net = slim.repeat(net, 3, slim.conv2d, 256, [3, 3])
     net = slim.max_pool2d(net, [2, 2])
     net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3])
-    net = slim.max_pool2d(net, [2, 2], scope=)
+    net = slim.max_pool2d(net, [2, 2])
     net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3])
     net = slim.max_pool2d(net, [2, 2])
     net = slim.fully_connected(net, 4096)
