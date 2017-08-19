@@ -27,11 +27,14 @@ class BaseModel(object):
     raise NotImplementedError()
 
 class Convolution(BaseModel):
+    
   def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
-    net = slim.conv2d(model_input, 20, [3, 3], scope='conv3_1')
-    net = slim.conv2d(net, 20, [3, 3], scope='conv3_2')
-    net = slim.max_pool2d(net, [2, 2], scope='pool1')
-    net = slim.fully_connected(net, 32, scope='fc/fc_1')
+    net = slim.conv2d(model_input, 20, [5,5], scope='conv1')
+    net = slim.max_pool2d(net, [2,2], scope='pool1')
+    net = slim.conv2d(net, 50, [5,5], scope='conv2')
+    net = slim.max_pool2d(net, [2,2], scope='pool2')
+    net = slim.flatten(net, scope='flatten3')
+    net = slim.fully_connected(net, 500, scope='fc4')
     output = slim.fully_connected(
         net, num_classes, activation_fn=None,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
