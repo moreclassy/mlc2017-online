@@ -39,9 +39,9 @@ class Convolution(BaseModel):
     net = slim.repeat(net, 3, slim.conv2d, 512, [3, 3], scope='conv5')
     net = slim.max_pool2d(net, [2, 2], scope='pool5')
     net = slim.fully_connected(net, 4096, scope='fc6')
-    net = slim.dropout(net, 0.5, scope='dropout6')"""
+    net = slim.dropout(net, 0.5, scope='dropout6')
     net = slim.fully_connected(net, 4096, scope='fc7')
-    net = slim.dropout(net, 0.5, scope='dropout7')
+    net = slim.dropout(net, 0.5, scope='dropout7')"""
     output = slim.fully_connected(
         net, num_classes, activation_fn=None,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
