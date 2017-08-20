@@ -136,8 +136,8 @@ class Convolution4(BaseModel):
 class Convolution5(BaseModel):
     
     def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
-        net = slim.flatten(net)
-        net = slim.repeat(model_input, 2, slim.conv2d, 64, [3, 3])
+        net = slim.flatten(model_input)
+        net = slim.repeat(net, 2, slim.conv2d, 64, [3, 3])
         net = slim.max_pool2d(net, [2, 2])
         net = slim.repeat(net, 2, slim.conv2d, 128, [3, 3])
         net = slim.max_pool2d(net, [2, 2])
