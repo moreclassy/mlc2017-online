@@ -18,7 +18,6 @@ import tensorflow as tf
 import utils
 
 import tensorflow.contrib.slim as slim
-from tensorflow.contrib.slim.python.slim.nets import resnet_v2, vgg, overfeat, alexnet
 
 """Contains the base class for models."""
 class BaseModel(object):
@@ -171,37 +170,6 @@ class Convolution6(BaseModel):
         output = slim.fully_connected(
             net, num_classes, activation_fn=tf.nn.softmax,
             weights_regularizer=slim.l2_regularizer(l2_penalty))
-        return {"predictions": output}
-
-class ResNetModel(BaseModel):
-    def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
-        output = resnet_v2.resnet_v2_50(model_input, num_classes=num_classes)[0]
-        output = tf.reshape(output, [-1, num_classes])
-        output = tf.nn.softmax(output)
-        return {"predictions": output}
-
-class VggModel(BaseModel):
-    def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
-        model_input = tf.image.resize_images(model_input, [224, 224])
-        output = vgg.vgg_16(model_input, num_classes=num_classes, is_training=is_training)[0]
-        output = tf.reshape(output, [-1, num_classes])
-        output = tf.nn.softmax(output)
-        return {"predictions": output}
-
-class OverfeatModel(BaseModel):
-    def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
-        model_input = tf.image.resize_images(model_input, [231, 231])
-        output = overfeat.overfeat(model_input, num_classes=num_classes, is_training=is_training)[0]
-        output = tf.reshape(output, [-1, num_classes])
-        output = tf.nn.softmax(output)
-        return {"predictions": output}
-
-class AlexNetModel(BaseModel):
-    def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
-        model_input = tf.image.resize_images(model_input, [224, 224])
-        output = alexnet.alexnet_v2(model_input, num_classes=num_classes, is_training=is_training)[0]
-        output = tf.reshape(output, [-1, num_classes])
-        output = tf.nn.softmax(output)
         return {"predictions": output}
 
 class LogisticModel(BaseModel):
