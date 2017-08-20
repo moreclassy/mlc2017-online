@@ -195,8 +195,6 @@ class InceptionResNetModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
         model_input = tf.image.resize_images(model_input, [299, 299])
         output = inception_resnet_v2.inception_resnet_v2(model_input, num_classes=num_classes)[0]
-        output = tf.argmax(output, 1)
-        output = tf.reshape(output, [-1, num_classes])
         return {"predictions": output}
 
 class LogisticModel(BaseModel):
