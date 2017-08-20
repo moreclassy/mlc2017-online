@@ -172,7 +172,7 @@ class Convolution6(BaseModel):
             weights_regularizer=slim.l2_regularizer(l2_penalty))
         return {"predictions": output}
 
-from tensorflow.contrib.slim.python.slim.nets import resnet_v2, inception_v3
+from tensorflow.contrib.slim.python.slim.nets import resnet_v2, inception_v3, inception_resnet_v2
 
 class ResNetModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
