@@ -168,7 +168,7 @@ class Convolution6(BaseModel):
         net = slim.fully_connected(net, 256)
         net = slim.dropout(net, 0.5)
         output = slim.fully_connected(
-            net, num_classes, activation_fn=softmax,
+            net, num_classes, activation_fn=tf.nn.softmax,
             weights_regularizer=slim.l2_regularizer(l2_penalty))
         return {"predictions": output}
 
