@@ -176,6 +176,7 @@ from tensorflow.contrib.slim.python.slim.nets import resnet_v2, inception_v3
 
 class ResNetModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
+        model_input = tf.image.resize_images(model_input, [224, 224])
         output = resnet_v2.resnet_v2_50(model_input, num_classes=num_classes)[0]
         output = tf.reshape(output, [-1, num_classes])
         output = tf.nn.softmax(output)
@@ -183,6 +184,7 @@ class ResNetModel(BaseModel):
 
 class InceptionModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
+        model_input = tf.image.resize_images(model_input, [224, 224])
         output = inception_v3.inception_v3(model_input, num_classes=num_classes)[0]
         output = tf.reshape(output, [-1, num_classes])
         output = tf.nn.softmax(output)
