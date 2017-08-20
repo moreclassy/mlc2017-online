@@ -1,6 +1,6 @@
 from setuptools import find_packages
 from setuptools import setup
-"""REQUIRED_PACKAGES = ['gym>=0.9.1']
+REQUIRED_PACKAGES = ['gym>=0.9.1']
 setup(
     name='cartpole',
     version='0.1',
@@ -9,4 +9,3 @@ setup(
     include_package_data=True,
     description='kmlcc-training'
 )
-"""
