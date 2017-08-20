@@ -80,6 +80,23 @@ class Convolution3(BaseModel):
           weights_regularizer=slim.l2_regularizer(l2_penalty))
         return {"predictions": output}
 
+class Convolution4(BaseModel):
+    
+    def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
+        net = slim.repeat(model_input, 2, slim.conv2d, 64, [3, 3])
+        net = slim.max_pool2d(net, [2, 2])
+        net = slim.repeat(net, 2, slim.conv2d, 128, [3, 3])
+        net = slim.max_pool2d(net, [2, 2])
+        net = slim.repeat(net, 3, slim.conv2d, 256, [3, 3])
+        net = slim.max_pool2d(net, [2, 2])
+        net = slim.fully_connected(net, 256)
+        net = slim.dropout(net, 0.5)
+        net = slim.flatten(net)
+        output = slim.fully_connected(
+          net, num_classes, activation_fn=None,
+          weights_regularizer=slim.l2_regularizer(l2_penalty))
+        return {"predictions": output}
+
 class LogisticModel(BaseModel):
   """Logistic model with L2 regularization."""
 
