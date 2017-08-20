@@ -193,8 +193,10 @@ class InceptionModel(BaseModel):
 
 class InceptionResNetModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
-        model_input = tf.image.resize_images(model_input, [5, 299, 299, 1])
-        output = inception_resnet_v2.inception_resnet_v2(model_input, num_classes=num_classes)[0]
+        model_input = tf.image.resize_images(model_input, [299, 299])
+        arg_scope = inception_resnet_v2_arg_scope()
+        with slim.arg_scope(arg_scope):
+            output = inception_resnet_v2.inception_resnet_v2(model_input, num_classes=num_classes)[0]
         output = tf.reshape(output, [-1, num_classes])
         output = tf.nn.softmax(output)
         return {"predictions": output}
