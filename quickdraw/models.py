@@ -179,14 +179,14 @@ class ResNetModel(BaseModel):
         output = resnet_v2.resnet_v2_50(model_input, num_classes=num_classes)[0]
         output = tf.reshape(output, [-1, num_classes])
         output = tf.nn.softmax(output)
-    return {"predictions": output}
+        return {"predictions": output}
 
 class InceptionModel(BaseModel):
     def create_model(self, model_input, num_classes=10, is_training=True, **unused_params):
         output = inception_v3.inception_v3(model_input, num_classes=num_classes)[0]
         output = tf.reshape(output, [-1, num_classes])
         output = tf.nn.softmax(output)
-    return {"predictions": output}
+        return {"predictions": output}
 
 class LogisticModel(BaseModel):
   """Logistic model with L2 regularization."""
