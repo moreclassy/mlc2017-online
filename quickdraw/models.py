@@ -83,9 +83,16 @@ class Convolution3(BaseModel):
 class Convolution4(BaseModel):
     
     def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
+        net = slim.flatten(model_input)
         net = tf.layers.conv2d(
             inputs=model_input,
             filters=32,
+            kernel_size=[5, 5],
+            padding="same",
+            activation=tf.nn.relu)
+        net = tf.layers.conv2d(
+            inputs=net,
+            filters=64,
             kernel_size=[5, 5],
             padding="same",
             activation=tf.nn.relu)
@@ -96,15 +103,27 @@ class Convolution4(BaseModel):
             kernel_size=[5, 5],
             padding="same",
             activation=tf.nn.relu)
+        net = tf.layers.conv2d(
+            inputs=net,
+            filters=64,
+            kernel_size=[5, 5],
+            padding="same",
+            activation=tf.nn.relu)
         net = tf.layers.max_pooling2d(inputs=net, pool_size=[2, 2], strides=2)
         net = slim.fully_connected(net, 100)
         net = slim.dropout(net, 0.5)
         net = tf.layers.conv2d(
-           inputs=net,
-           filters=64,
-           kernel_size=[5, 5],
-           padding="same",
-           activation=tf.nn.relu)
+            inputs=net,
+            filters=64,
+            kernel_size=[5, 5],
+            padding="same",
+            activation=tf.nn.relu)
+        net = tf.layers.conv2d(
+            inputs=net,
+            filters=64,
+            kernel_size=[5, 5],
+            padding="same",
+            activation=tf.nn.relu)
         net = tf.layers.max_pooling2d(inputs=net, pool_size=[2, 2], strides=2)
         net = slim.fully_connected(net, 100)
         net = slim.dropout(net, 0.5)
