@@ -215,6 +215,17 @@ class LogisticModel(BaseModel):
     net = slim.conv2d(model_input, 2048, [5,5])
     net = slim.flatten(model_input)
     output = slim.fully_connected(
+        net, num_classes, activation_fn=None,
+        weights_regularizer=slim.l2_regularizer(l2_penalty))
+    return {"predictions": output}
+
+class SimpleModel(BaseModel):
+  def create_model(self, model_input, num_classes=10, l2_penalty=1e-8, **unused_params):
+    net = slim.conv2d(model_input, 512, [5,5])
+    net = slim.fully_connected(net, 256)
+    net = slim.dropout(net, 0.5)
+    net = slim.flatten(model_input)
+    output = slim.fully_connected(
         net, num_classes, activation_fn=tf.nn.softmax,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
     return {"predictions": output}
